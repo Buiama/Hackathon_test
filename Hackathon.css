@@ -7,7 +7,6 @@ body {
 
 header {
 	min-height: 10vh;
-	width:100vw;
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
@@ -40,16 +39,14 @@ header {
 	margin-bottom: 5vh; 
     color: black;
     text-align: center;
-    /*background-color: violet;*/
 }
 
 .issue h2 {
     font-weight: bolder;
     margin-bottom: 3vh;
 }
-#result-heading {
+#head {
 	margin-bottom: 3vh;
-	/*background-color: violet;*/
 }
 
 
@@ -61,10 +58,9 @@ header {
    display: flex;
    text-align: center;
    justify-content: center;
-   /*background-color: blue;*/
 }
 
-.flex {
+.searchLine {
     display: flex;
     margin: 2vh; 
 }
@@ -82,7 +78,7 @@ input[type = "text"] {
     width: 25vw;
 }
 
-.search-btn {
+.button {
     cursor: pointer;
     border-radius: 2px;
     border-left: 0;
@@ -90,7 +86,7 @@ input[type = "text"] {
     border-bottom-right-radius: 5px;
 }
 
-.meals {
+.dishes {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 3vw;
@@ -130,7 +126,7 @@ input[type = "text"] {
     opacity: 1;
 }
 
-#single-meal {
+#oneDish {
 	padding: 5%;
 	margin-bottom: 7vh; 
 	display: none;
@@ -138,77 +134,11 @@ input[type = "text"] {
 	min-height: 100vh;
 	background-color: gold;
 }
-#single-meal img {
+#oneDish img {
     width: 50%;
     margin: 5vh;
     border-radius: 50vw;
 }
-#ulList {
+#list {
 	text-align: left;
 }
-
-/*.single-meal {
-    margin: 30px auto;
-    width: 75%;
-}
-
-.single-meal img {
-    width: 300px;
-    margin: 15px;
-    box-shadow: 0 2px 5px rgb(31, 15, 6);
-}
-
-.single-meal-info {
-    margin: 25px;
-    padding: 10px;
-    border: 2px ridge rgba(0, 0, 0, 0.5);
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-#meal-making-instructions {
-    border: 2px ridge rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.3);
-    letter-spacing: 1px;
-    line-height: 1.5;
-}
-
-.single-meal p {
-    margin: 0;
-    letter-spacing: 0.5px;
-    line-height: 1.5;
-}
-
-.single-meal ul {
-    padding-left: 0;
-    list-style-type: none;
-}
-
-.single-meal ul li {
-    cursor: default;
-    border: 1px solid hsl(23, 75%, 92%);
-    box-shadow: 0 2px 5px #fff;
-    border-radius: 10px 5px;
-    background-color: #f1f1f1;
-    display: inline-block;
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 12px;
-    margin: 0 10px 10px 0;
-    font-weight: bold;
-    transition: transform 0.2s ease;
-}
-
-.single-meal ul li:hover {
-    transform: scale(1.02);
-}
-
-.categoryAndOrigin {
-    font-weight: bolder;
-    font-size: 16px;
-}
-
-hr {
-    margin-top: 50px;
-}*/
