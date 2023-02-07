@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta name="author" content="Team Nuclear Gandhi">
+	<meta charset="UTF-8">
+	<title>Hackathon</title>
+	<link rel="stylesheet" href="Hackathon.css">
+</head>
+<body>
+	<header>
+		<h1 class="team">Nuclear Gandhi</h1>
+		<div class="info">
+			<h1><a class="nav__link" href="index.html">Home</a></h1>
+			<h1><a class="nav__link" href="frige.html">Fridge</a></h1>
+			<h1><a class="nav__link" href="about.html">About</a></h1>
+		</div>
+	</header>
+	<main>
+		<div class="input">
+            <h2><label>What's in your frige?</label></h2>
+            <form id="submit1">
+                <input list="datalistOptions" id="ingredientInput" placeholder="Name of ingradient...">
+                <input id="ingredientCount" placeholder="Amount of ingradient...">
+                <input list="datalistOptionsMeasure" id="ingredientMeasure" placeholder="Ingradient measure...">
+                <input list="datalistOptionsCategory" id="ingredientCategory" placeholder="Ingradient category...">
+                
+                
+                <datalist id="datalistOptions">
+                    <option value="Tomato">
+                    <option value="Milk">
+                    <option value="Salmon">
+                    <option value="Chicken breast">
+                </datalist>
+                <datalist id="datalistOptionsMeasure">
+                        <option value="kg">
+                        <option value="L">
+                        <option value="cup">
+ 						<option value="tbs">
+ 				</datalist>
+                <datalist id="datalistOptionsCategory">
+                        <option value="Milk">
+                        <option value="Meat">
+                        <option value="Fruits and vegetables">
+ 						<option value="Other">
+ 				</datalist>
+            <button type="reset" id="ingredientInputSubmit" onclick="SaveIngredient()">Add</button>
+            </form>
+        </div>
+        <div id="toHide">Your frige is empty!( Add something</div>
+        <div id="toShow">
+        	<h2>Conteins:</h2>
+    	    
+    	    <h3>Milk:</h3>
+    	    <ul id="milk"></ul><br>
+
+    	    <h3>Meat:</h3>
+			<ul id="meat"></ul><br>
+
+    	    <h3>Fruits and vegetables:</h3>
+			<ul id="frut_vegetables"></ul><br>
+
+    	    <h3>Other:</h3>
+			<ul id="other"></ul><br>
+		</div>
+	</main>
+	<script src="hackathon.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 	margin: 0;
 }
 body {
-	background-color: gray;
+	background-color: #F0ECCF;
 }
 
 header {
@@ -10,7 +10,20 @@ header {
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	background-color: green;
+	background-color: orange;
+}
+
+.nav__link {
+    padding: 7px 15px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: black;
+}
+
+.nav__link:hover{
+    background-color: #337ECC;
+    color: white;
+    transition: color, background-color 0.2s linear;
 }
 
 .team {
@@ -34,14 +47,14 @@ header {
 }
 
 
-.issue {
+.issue, .input {
 	margin-top: 7vh;
 	margin-bottom: 5vh; 
     color: black;
     text-align: center;
 }
 
-.issue h2 {
+.issue h2, .input h2 {
     font-weight: bolder;
     margin-bottom: 3vh;
 }
@@ -132,7 +145,7 @@ input[type = "text"] {
 	display: none;
 	width: 40vw;
 	min-height: 100vh;
-	background-color: gold;
+	background-color: #A3BB98;
 }
 #oneDish img {
     width: 50%;
@@ -141,4 +154,21 @@ input[type = "text"] {
 }
 #list {
 	text-align: left;
+}
+
+#toHide {
+	font-weight: bold;
+	text-align: center;
+}
+#toShow {
+	display: none;
+	margin-left: 2vw;
+	margin-right: 2vw;
+	margin-top: 3vh;
+	margin-bottom: 3vh;
+	margin-left: 3vw;
+}
+
+#toShow h3, #toShow ul {
+	margin-left: 2vw;
 }

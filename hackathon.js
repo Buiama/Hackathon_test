@@ -3,7 +3,10 @@ let submit = document.getElementById("submit");
 let head = document.getElementById("head");
 let showDishes = document.getElementById("dishes");
 let dish = document.getElementById("oneDish");
-
+let frigeName = document.getElementById("ingredientInput");
+let frigeCount = document.getElementById("ingredientCount");
+let frigeMeasure = document.getElementById("ingredientMeasure");
+let frigeCategory = document.getElementById("ingredientCategory");
 
 function searchDishes(e) { // пошук страв за допомогою API
     e.preventDefault();
@@ -26,7 +29,7 @@ function findDishes(input) { // виводимо всі страви, що зн�
             
             // результат пошуку
             if (data.meals === null) {
-                head.innerHTML = `<p>There are no search results for '${input}', please try another search input.</p>`;
+                head.innerHTML = `<p>Sorry, but unfortunately we don't know a dish called '${input}', please try another search input.</p>`;
                 showDishes.innerHTML = "";
             }
             else {
@@ -86,3 +89,35 @@ function displayDish(mealID) { // виводимо рецепт та інгра�
 
 
 submit.addEventListener("submit", searchDishes);
+
+
+function SaveIngredient() { // робота на сторінці frige.html
+    document.getElementById("toHide").style.display="none";
+    document.getElementById("toShow").style.display="block";
+
+    let inputFrigeName = frigeName.value;
+    let inputFrigeCount = frigeCount.value;
+    let inputFrigeMeasure = frigeMeasure.value;
+    let inputFrigeCategory = frigeCategory.value;
+
+    let ulMilk = document.getElementById("milk");
+    let ulMeat = document.getElementById("meat");
+    let ulFr_vg = document.getElementById("frut_vegetables");
+    let ulOther = document.getElementById("other");
+
+    let li1=document.createElement("li");
+    li1.innerHTML=`${inputFrigeName} - ${inputFrigeCount} ${inputFrigeMeasure}`;
+
+    if(inputFrigeCategory=="Milk") {
+        ulMilk.appendChild(li1);
+    }
+    else if(inputFrigeCategory=="Meat"){
+        ulMeat.appendChild(li1);
+    }
+    else if(inputFrigeCategory=="Fruits and vegetables"){
+        ulFr_vg.appendChild(li1);
+    }
+    else {
+        ulOther.appendChild(li1);
+    } 
+}
