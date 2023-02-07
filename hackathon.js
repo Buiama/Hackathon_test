@@ -1,40 +1,36 @@
-//declaring variables and getting elements from the DOM
-const search = document.getElementById("search");
-const submit = document.getElementById('submit');
-const resultHeading = document.getElementById('result-heading');
-const mealsEl = document.getElementById('meals');
-const singleMealEl = document.getElementById("single-meal");
+let search = document.getElementById("search");
+let submit = document.getElementById('submit');
+let head = document.getElementById('head');
+let showDishes = document.getElementById('dishes');
+let dish = document.getElementById("oneDish");
 
 
-//fetching meals from the API
-function searchMeal(e) {
-    //eliminate default behavior of the DOM
+function searchDishes(e) { // пошук страв за допомогою API
     e.preventDefault();
-document.getElementById('single-meal').style.display="none";
-    //clear the single meal section in the DOM
-    singleMealEl.innerHTML = "";
 
-    //declaring the search variable
-    const term = search.value;
+    // очищуємо вибрану страву (якщо є)
+    document.getElementById('oneDish').style.display="none"; 
+    dish.innerHTML = "";
 
-    //check if the input is empty
-    if (term.trim()) {
-        loadInitialMeals(term);
+    let input = search.value;
+    if (input.trim()) {
+        findDishes(input);
     }
 }
 
-//enter the filtered meal list
-function loadInitialMeals(term) {
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
-        .then((res) => res.json())
+
+function findDishes(input) { // виводимо всі страви, що знайшли
+    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`).then((result) => result.json())
         .then((data) => {
-            resultHeading.innerHTML = `<h4>Search results for '${term}'</h4>`;
+            head.innerHTML = `<h4>Search results for '${input}'</h4>`;
+            // результат пошуку
             if (data.meals === null) {
-                resultHeading.innerHTML = `<p>There are no search results for ${term}, please try another search term.</p>`;
-                mealsEl.innerHTML = "";
-            } else {
-                mealsEl.innerHTML = data.meals.map((meal) => `
-                <div class="meal" onclick="display('${meal.idMeal}')">
+                head.innerHTML = `<p>There are no search results for ${input}, please try another search input.</p>`;
+                showDishes.innerHTML = "";
+            }
+            else {
+                showDishes.innerHTML = data.meals.map((meal) => `
+                <div class="meal" onclick="displayDish('${meal.idMeal}')">
                     <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
                     <div class="meal-info" data-mealID="${meal.idMeal}">
                         <h3>${meal.strMeal}</h3>
@@ -43,162 +39,49 @@ function loadInitialMeals(term) {
                 `).join("");
             }
         });
-        //clear the search term
         search.value = "";
 }
 
-loadInitialMeals('Pie');
 
-function display(mealID) {
-    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`;
+findDishes('Pie'); // початковий пошук на головній сторінці
 
-    console.log(url);
 
-    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`)
-        .then(response => response.json())
+function displayDish(mealID) { // виводимо рецепт та інградієнти для вибраної страви
+    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`).then(response => response.json())
         .then(data => {
-            document.getElementById('single-meal').style.display="block";
-            let f = data["meals"][0]
+            document.getElementById('oneDish').style.display="block"; // робимо поле видимим
             
-            singleMealEl.innerHTML = `
-            <img src="${data.meals[0].strMealThumb}" alt="${data.meals[0].strMeal}"/>
-            <h1>${data.meals[0].strMeal}</h1><br>
-            <h2>Ingredients</h2>
-            <ul id="ulList">`;
-            let ul=document.getElementById('ulList');
-            let listIng = [];
+            dish.innerHTML = `
+                <img src="${data.meals[0].strMealThumb}" alt="${data.meals[0].strMeal}"/>
+                <h1>${data.meals[0].strMeal}</h1><br>
+                <h2>Ingredients</h2>
+                <ul id="list">
+            `;
+
+            let accessData = data["meals"][0]; // для простішого доступу
+            let ul = document.getElementById('list');
+            let ingradientList = []; 
 
             for (let i=1; i<21; i++) {
-                if (f[`strIngredient${i}`]) {
-                    listIng.push(f[`strIngredient${i}`]+ ' - '+ f[`strMeasure${i}`]);
+                if (accessData[`strIngredient${i}`]) {
+                    ingradientList.push(accessData[`strIngredient${i}`]+ ' - '+ accessData[`strMeasure${i}`]);
 
                     let li=document.createElement('li');
-                    li.innerHTML=f[`strIngredient${i}`]+ ' - '+ f[`strMeasure${i}`];
+                    li.innerHTML=accessData[`strIngredient${i}`]+ ' - '+ accessData[`strMeasure${i}`];
                     ul.appendChild(li);
                 } 
                 else {
                     break;
                 }
             }
-            singleMealEl.innerHTML += `
-            </ul><br>
-            <h2>Instruction</h2><br>
-            <p>${data.meals[0].strInstructions}</p>
+
+            dish.innerHTML += `
+                </ul><br>
+                <h2>Instruction</h2><br>
+                <p>${data.meals[0].strInstructions}</p>
             `;
-            console.log("data: ",data.meals[0]);
         });
 }
-/****************************************************************************************************************************************/
-const FoodDAta = data => {
-    document.getElementById('single-meal').style.display="block";
-    // let ul=document.getElementById('ingrade');
-    // let div=document.getElementById('Details');
-    // show.style.display='none';
-
-    // let food = data["meals"][0];
-
-    // console.log(food);
-    // let foodThumb=food['strMealThumb'];
-    // let title=food['strMeal'];
-
-    // const  showA=document.createElement('div');
-
-    // const showInfo=`
-    //             <div class="row row-cols-12 align-items-center justify-content-center" >
-    //                   <div class="card m-5"  id="ImageClick" style="width: 18rem; padding: 2%">
-    //                         <img src="${foodThumb}" class="card-img-top img-fluid img-responsive align-items-center" alt="...">
-    //                        <div class="card-body">
-    //                      <h5 class="card-title">${title}</h5>
-    //                </div>
-    //                </div>
-    //            </div>
-    //                 `;
-    // showA.innerHTML=showInfo;
-    // div.appendChild(showA);
-
-    // let h3=document.createElement('h3');
-    // h3.innerHTML=food['strMeal'];
-    // for (let i = 1; i <= 20; i++) {
 
 
-    // let li=document.createElement('li');
-
-    //     if (food[`strIngredient${i}`]) {
-    //         console.log(food[`strIngredient${i}`]);
-    //         li.innerHTML=food[`strIngredient${i}`]
-    //         ul.appendChild(li);
-
-
-    //     } else {
-
-    //         break;
-    //     }
-    // }
-    // div.appendChild(h3);
-    // div.appendChild(ul);
-}
-/****************************************************************************************************************************************/
-//fetching meals from the API by ID
-// function getMealByID(mealID) {
-//     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`)
-//         .then((res) => res.json())
-//         .then((data) => {
-//             const meal = data.meals[0];
-//             addMealToDOM(meal);
-//         })
-// }
-
-//adding meals to the DOM
-// function addMealToDOM(meal) {
-//     const ingredients = [];
-
-//     for (let i=1; i<=20; ++i) {
-//         if (meal[`strIngredients${i}`]) {
-//             ingredients.push(`${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`);
-//         } else {
-//             break;
-//         }
-//     }
-
-//     singleMealEl.innerHTML = `
-//     // <hr/>
-//     <div class="single-meal">
-//         <h1>${meal.strMeal}</h1>
-//         <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
-//         <div class="single-meal-info">
-//             ${meal.strCategory ? `<p><span class="categoryAndOrigin">Category:</span>${meal.strCategory}</p>` : ''}
-//             ${meal.strArea ? `<p><span class=categoryAndOrigin>Origin:</span></p>` : ''}
-//         </div>
-//         <div class="main">
-//             <p id="meal-making-instructions">${meal.strInstructions}</p>
-//             <hr/>
-//             <h2>Ingredients</h2>
-//             <ul>${ingredients.map((ing) => `<li>${ing}</li>`).join('')}</ul>
-//         </div>
-//     </div>
-//     `;
-// }
-
-//scroll to a single meal by clicking
-// function scrollTo() {
-//     window.location = '#single-meal';
-// }
-
-
-//adding event listeners to the buttons and elements
-submit.addEventListener('submit', searchMeal);
-
-// mealsEl.addEventListener('click', (e) => {
-//     const mealInfo = e.path.find(item => {
-//         if (item.classList) {
-//             return item.classList.contains('meal-info');
-//         } else {
-//             return false;
-//         }
-//     });
-//     if (mealInfo) {
-//         const mealID = mealInfo.getAttribute('data-mealid');
-//         getMealByID(mealID);
-//     }
-//     scrollTo("single-meal");
-// });
+submit.addEventListener('submit', searchDishes);
